@@ -11,6 +11,7 @@ const formData = reactive({
   username: user.acc,
   password: user.pwd,
 })
+const showTips = ref(false)
 const loading = ref(false)
 const show = ref(false)
 const msg = ref('')
@@ -60,7 +61,8 @@ const login = () => {
           <path
               d="M51.03,37.34c0.16,0.98,1.08,1.66,2.08,1.66h5.39c2.63,0,4.75,2.28,4.48,4.96	C62.74,46.3,60.64,48,58.29,48H49c-1.22,0-2.18,1.08-1.97,2.34c0.16,0.98,1.08,1.66,2.08,1.66h8.39c1.24,0,2.37,0.5,3.18,1.32	C61.5,54.13,62,55.26,62,56.5c0,2.49-2.01,4.5-4.5,4.5h-49c-1.52,0-2.9-0.62-3.89-1.61C3.62,58.4,3,57.02,3,55.5	C3,52.46,5.46,50,8.5,50H14c1.22,0,2.18-1.08,1.97-2.34C15.81,46.68,14.89,44,13.89,44H5.5c-2.63,0-4.75-2.28-4.48-4.96	C1.26,36.7,3.36,35,5.71,35H8c1.71,0,3.09-1.43,3-3.16C10.91,30.22,9.45,29,7.83,29H4.5c-2.63,0-4.75-2.28-4.48-4.96	C0.26,21.7,2.37,20,4.71,20H20c0.83,0,1.58-0.34,2.12-0.88C22.66,18.58,23,17.83,23,17c0-1.66-1.34-3-3-3h-1.18	c-0.62-0.09-1.43,0-2.32,0h-9c-1.52,0-2.9-0.62-3.89-1.61S2,10.02,2,8.5C2,5.46,4.46,3,7.5,3h49c3.21,0,5.8,2.79,5.47,6.06	C61.68,11.92,60.11,14,57.24,14H52c-2.76,0-5,2.24-5,5c0,1.38,0.56,2.63,1.46,3.54C49.37,23.44,50.62,24,52,24h6.5	c3.21,0,5.8,2.79,5.47,6.06C63.68,32.92,61.11,35,58.24,35H53C51.78,35,50.82,36.08,51.03,37.34z"
               fill="url(#ipdIa4~cOclR8yt_ClW93a)"></path>
-          <linearGradient id="ipdIa4~cOclR8yt_ClW93b" gradientTransform="translate(0 -534)" gradientUnits="userSpaceOnUse"
+          <linearGradient id="ipdIa4~cOclR8yt_ClW93b" gradientTransform="translate(0 -534)"
+                          gradientUnits="userSpaceOnUse"
                           x1="32" x2="32" y1="530.096" y2="590.253">
             <stop offset="0" stop-color="#42d778"></stop>
             <stop offset=".428" stop-color="#3dca76"></stop>
@@ -96,15 +98,31 @@ const login = () => {
       </var-space>
     </var-form>
     <var-space style="display: flex;align-items: center;justify-content: center;margin-top: 10em">
-      <var-button
-          :loading="loading"
-          color="linear-gradient(to right bottom, #6750A4, #D0BCFF)"
-          text-color="#fff"
-          @click="login"
-      >
-        登录
+      <div>
+        <var-button
+            :loading="loading"
+            color="linear-gradient(to right bottom, #6750A4, #D0BCFF)"
+            text-color="#fff"
+            block
+            size="large"
+            @click="login"
+        >
+          登录
+        </var-button>
+      </div>
+      <var-button type="info" round icon-container style="margin-left: 10px" size="large" @click="showTips = true">
+        <var-icon name="information"/>
       </var-button>
     </var-space>
+    <var-popup v-model:show="showTips" style="width: 80vw;height: 20vh;border-radius: 5px">
+      <var-alert
+          style="width: 80vw;height: 20vh;"
+          v-show="showTips"
+          title="Tips: 登录名错误或者密码错误"
+          variant="tonal"
+          :message="'可前往微信服务号->对分易->我的中修改登录名或密码'"
+      />
+    </var-popup>
     <var-snackbar v-model:show="show">{{ msg }}</var-snackbar>
   </div>
 
