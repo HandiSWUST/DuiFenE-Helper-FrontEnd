@@ -16,6 +16,8 @@ const loading = ref(false)
 const show = ref(false)
 const msg = ref('')
 const form = ref(null)
+
+const retry = ref(0)
 const login = () => {
   const validate = form.value.validate();
   validate.then((v) => {
@@ -30,12 +32,17 @@ const login = () => {
     axios.post('/login', ap).then(() => {
       msg.value = '登录成功'
       show.value = true
+      retry.value = 0
       emits('login', 1)
       localStorage.setItem('user', JSON.stringify(ap))
     }).catch(() => {
       localStorage.removeItem('user')
       msg.value = '用户名或密码错误'
       show.value = true
+      retry.value++
+      if (retry.value === 4) {
+        showTips.value = true
+      }
     }).finally(() => {
       loading.value = false;
     })
